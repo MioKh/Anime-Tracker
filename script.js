@@ -57,12 +57,16 @@ saveButton.addEventListener('click', () => {
     let isWatched = document.createElement("p");
     isWatched.textContent = Animes[i].isWatched ? "Watched" : "Haven't Watched";
     
+    
     card.appendChild(animeName);
     card.appendChild(animeAuthor);
     card.appendChild(animeEpisodes);
     card.appendChild(isWatched);
     
     container.appendChild(card);
+    
+    updateAnimeCount()
+
     }
     
 
@@ -71,4 +75,12 @@ saveButton.addEventListener('click', () => {
     hider.style.display = "none";
 })
 
-  
+const animeCount = document.createElement('h1');
+animeCount.textContent = Animes.length;
+
+const animeHeader = document.querySelector(".header");
+animeHeader.appendChild(animeCount);
+
+function updateAnimeCount() {
+    animeCount.textContent = Animes.length;
+}

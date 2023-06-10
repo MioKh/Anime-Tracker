@@ -3,6 +3,12 @@ body{
     color: #cad0db;
 }
 
+.header{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
 .anime-list-header{
     display: flex;
     justify-content: space-between;
