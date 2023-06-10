@@ -1,64 +1,12 @@
 const container = document.querySelector(".anime-container");
 
 let Animes = [
-    {
-        name: "test",
-        author: "also test",
-        episodes: 12,
-        isWatched: true,
-    },
-    {
-        name: "bruh",
-        author: "sfsd test",
-        episodes: 656,
-        isWatched: false,
-    },
-    {
-        name: "test",
-        author: "also test",
-        episodes: 12,
-        isWatched: true,
-    },
-    {
-        name: "bruh",
-        author: "sfsd test",
-        episodes: 656,
-        isWatched: false,
-    },
-    {
-        name: "bruh",
-        author: "sfsd test",
-        episodes: 656,
-        isWatched: false, 
-    }
+
 ]
 
-
-for (let i = 0; i < Animes.length; i++) {
-    
-    let card = document.createElement("div");
-card.classList.add("card");
-
-let animeName = document.createElement("p");
-animeName.textContent = Animes[i].name;
-
-let animeAuthor = document.createElement("p");
-animeAuthor.textContent = Animes[i].author;
-
-let animeEpisodes = document.createElement('p');
-animeEpisodes.textContent = Animes[i].episodes;
-
-card.appendChild(animeName);
-card.appendChild(animeAuthor);
-card.appendChild(animeEpisodes);
-
-container.appendChild(card);
-}
-
-
 const addButton = document.querySelector(".add-anime");
+const saveButton = document.getElementById("saveAnimeBtn");
 const hider = document.querySelector(".hide");
-
 
 
 addButton.addEventListener('click', () => {
@@ -78,5 +26,49 @@ function Anime(name, author, episodes, isWatched) {
     this.episodes = episodes;
     this.isWatched = isWatched;
   }
+
+
+saveButton.addEventListener('click', () => {
+    const nameInput = document.getElementById("animeNameInput").value;
+    const authorInput = document.getElementById("animeAuthorInput").value;
+    const episodesInput = parseInt(document.getElementById("animeEpisodesInput").value);
+    const isWatchedInput = document.getElementById("animeIswatched").checked;
+
+    const newAnime = new Anime(nameInput,authorInput,episodesInput,isWatchedInput);
+    Animes.push(newAnime);
+
+    container.innerHTML = "";
+
+    for (let i = 0; i < Animes.length; i++) {
+    
+    let card = document.createElement("div");
+    card.classList.add("card");
+    
+    
+    let animeName = document.createElement("p");
+    animeName.textContent = Animes[i].name;
+    
+    let animeAuthor = document.createElement("p");
+    animeAuthor.textContent = Animes[i].author;
+    
+    let animeEpisodes = document.createElement('p');
+    animeEpisodes.textContent = Animes[i].episodes;
+    
+    let isWatched = document.createElement("p");
+    isWatched.textContent = Animes[i].isWatched ? "Watched" : "Haven't Watched";
+    
+    card.appendChild(animeName);
+    card.appendChild(animeAuthor);
+    card.appendChild(animeEpisodes);
+    card.appendChild(isWatched);
+    
+    container.appendChild(card);
+    }
+    
+
+
+
+    hider.style.display = "none";
+})
 
   
