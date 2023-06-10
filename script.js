@@ -56,3 +56,27 @@ container.appendChild(card);
 }
 
 
+const addButton = document.querySelector(".add-anime");
+const hider = document.querySelector(".hide");
+
+
+
+addButton.addEventListener('click', () => {
+    hider.style.display = "block";
+});
+
+const cancelButton = document.getElementById("cancelAnimeBtn");
+
+cancelButton.addEventListener('click', () =>{
+    hider.style.display = "none";
+})
+
+
+function Anime(name, author, episodes, isWatched) {
+    this.name = name;
+    this.author = author;
+    this.episodes = episodes;
+    this.isWatched = isWatched;
+  }
+
+  

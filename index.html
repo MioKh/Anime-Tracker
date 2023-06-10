@@ -10,15 +10,35 @@
 <body>
     
     <h1>Anime-Tracker</h1>
-    <h2>Anime List</h2>
-   
+    <div class="anime-list-header">
+        <h2>Anime List</h2>
+        <button class="add-anime">Add Anime</button>
+      </div>
     
     <div class="anime-container">
      
     </div>
 
-    
-
+    <div class="hide">
+    <div class="modal-container">
+        <div class="modal-content">
+          <h2>Add Anime</h2>
+          <p>Anime Name:</p>
+          <input type="text" id="animeNameInput" placeholder="Enter anime name">
+          <hr>
+          <p>Author:</p>
+          <input type="text" id="animeAuthorInput" placeholder="Enter author">
+          <hr>
+          <p>Number of Episodes:</p>
+          <input type="number" id="animeEpisodesInput" placeholder="Enter number of episodes">
+          <hr>
+          <div class="buttons-container">
+          <button class="modal-buttons" id="saveAnimeBtn" >Save</button>
+          <button class="modal-buttons" id="cancelAnimeBtn">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 
