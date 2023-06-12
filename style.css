@@ -129,3 +129,32 @@ input:focus {
 .hide{
     display: none;
 }
+
+@media only screen and (max-width: 425px) {
+  body {
+    background-color: #181e2e;
+    color: #cad0db;
+  }
+  
+
+  
+  .add-anime {
+    width: 50%;
+    margin-bottom: 1rem;
+    padding: 10px;
+  }
+  
+  .card {
+    width: 100%;
+    margin: 1rem 0;
+  }
+  
+  .modal-content {
+    width: 90%;
+  }
+  
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+  }
+}
