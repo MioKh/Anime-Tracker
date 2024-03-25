@@ -1,86 +1,121 @@
 const container = document.querySelector(".anime-container");
-
-let Animes = [
-
-]
-
 const addButton = document.querySelector(".add-anime");
-const saveButton = document.getElementById("saveAnimeBtn");
-const hider = document.querySelector(".hide");
+const hider = document.querySelector(".hide"); // gets important elements
 
 
-addButton.addEventListener('click', () => {
-    hider.style.display = "block";
-});
+let animes = []; // empty array for animes
 
-const cancelButton = document.getElementById("cancelAnimeBtn");
-
-cancelButton.addEventListener('click', () =>{
-    hider.style.display = "none";
-})
-
-
-function Anime(name, author, episodes, isWatched) {
+class Anime {
+  constructor(name, author, episodes, isWatched) {
     this.name = name;
     this.author = author;
     this.episodes = episodes;
     this.isWatched = isWatched;
   }
+} // anime class for anime objects
 
+function getInputValues() {
+  return {
+    name: document.getElementById("animeNameInput").value,
+    author: document.getElementById("animeAuthorInput").value,
+    episodes: parseInt(document.getElementById("animeEpisodesInput").value),
+    isWatched: document.getElementById("animeIswatched").checked,
+  };
+} // get input values and saves them for later use
 
-saveButton.addEventListener('click', () => {
-    const nameInput = document.getElementById("animeNameInput").value;
-    const authorInput = document.getElementById("animeAuthorInput").value;
-    const episodesInput = parseInt(document.getElementById("animeEpisodesInput").value);
-    const isWatchedInput = document.getElementById("animeIswatched").checked;
+function createAnimeCard(anime) {
+  const card = document.createElement("div");
+  card.classList.add("card");
 
-    const newAnime = new Anime(nameInput,authorInput,episodesInput,isWatchedInput);
-    Animes.push(newAnime);
+  const itemContainer = document.createElement("div");
+  itemContainer.classList.add("item-container");
+  card.appendChild(itemContainer);
 
-    container.innerHTML = "";
+  const animeName = document.createElement("p");
+  animeName.textContent = anime.name;
 
-    for (let i = 0; i < Animes.length; i++) {
-    
-    let card = document.createElement("div");
-    card.classList.add("card");
-    
-    
-    let animeName = document.createElement("p");
-    animeName.textContent = Animes[i].name;
-    
-    let animeAuthor = document.createElement("p");
-    animeAuthor.textContent = Animes[i].author;
-    
-    let animeEpisodes = document.createElement('p');
-    animeEpisodes.textContent = Animes[i].episodes;
-    
-    let isWatched = document.createElement("p");
-    isWatched.textContent = Animes[i].isWatched ? "Watched" : "Haven't Watched";
-    
-    
-    card.appendChild(animeName);
-    card.appendChild(animeAuthor);
-    card.appendChild(animeEpisodes);
-    card.appendChild(isWatched);
-    
+  const animeAuthor = document.createElement("p");
+  animeAuthor.textContent = anime.author;
+
+  const animeEpisodes = document.createElement("p");
+  animeEpisodes.textContent = anime.episodes;
+
+  const isWatched = document.createElement("p");
+  isWatched.textContent = anime.isWatched ? "Watched" : "Haven't Watched";
+
+  itemContainer.appendChild(animeName);
+  itemContainer.appendChild(animeAuthor);
+  itemContainer.appendChild(animeEpisodes);
+  itemContainer.appendChild(isWatched);
+
+  return card;
+} // creates an anime card in a very straightforward way
+
+function renderAnimes() {
+  container.innerHTML = "";
+
+  animes.forEach((anime) => {
+    const card = createAnimeCard(anime);
     container.appendChild(card);
-    
-    updateAnimeCount()
+  });
 
-    }
-    
-
-
-
-    hider.style.display = "none";
-})
-
-const animeCount = document.createElement('h1');
-animeCount.textContent = Animes.length;
-
-const animeHeader = document.querySelector(".header");
-animeHeader.appendChild(animeCount);
+  updateAnimeCount();
+} // renders animes :D , uses the createAnimeCard function and then appends them to the container by using forEach to go over all the animes in the animes array
 
 function updateAnimeCount() {
-    animeCount.textContent = Animes.length;
+  const animeCount = document.querySelector("h1");
+  animeCount.textContent = animes.length;
+} // gets array length and updates it in the counter
+
+function handleAddClick() {
+  hider.style.display = "block";
 }
+
+function handleCancelClick() {
+  hider.style.display = "none";
+}
+
+function saveToLocalStorage() {
+  localStorage.setItem("animes", JSON.stringify(animes));
+}
+
+// handles click events for the modal
+function handleSaveClick() {
+  const inputValues = getInputValues(); // using the getInputValues function to get the input values
+  const newAnime = new Anime(
+    inputValues.name,
+    inputValues.author,
+    inputValues.episodes,
+    inputValues.isWatched
+  ); // creating a new anime object by passing the input values to the constructor
+  animes.push(newAnime); // pushes the new made anime into the empty array that we are rendering
+
+  renderAnimes();
+
+  saveToLocalStorage();
+  hider.style.display = "none"; // closes modal
+}
+
+addButton.addEventListener("click", handleAddClick);
+
+const cancelButton = document.getElementById("cancelAnimeBtn");
+cancelButton.addEventListener("click", handleCancelClick);
+
+const saveButton = document.getElementById("saveAnimeBtn");
+saveButton.addEventListener("click", handleSaveClick);
+// just a bunch of event listeners for the modal
+// lol refactored the whole script
+function getItemsFromLocalStorage() {
+  const storedItems = localStorage.getItem("animes");
+  if (storedItems) {
+    return JSON.parse(storedItems);
+  } else {
+    return [];
+  }
+}
+
+function init () {
+  animes = getItemsFromLocalStorage();
+  renderAnimes();
+}
+init();
